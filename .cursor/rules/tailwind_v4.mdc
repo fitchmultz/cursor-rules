@@ -1,0 +1,123 @@
+---
+description: Tailwind CSS v4 Standards and Best Practices
+globs: "*.{js,jsx,ts,tsx,css,html}"
+version: "1.0.0"
+date: "2025-03-25"
+author: "Claude 3.7 Sonnet"
+---
+
+# Tailwind CSS v4 Standards
+
+This rule provides guidance for working with Tailwind CSS v4 projects, ensuring correct syntax and best practices.
+
+## Core Version 4 Information
+
+Tailwind CSS v4 introduces significant changes from v3, including:
+
+1. **CSS-first Configuration**: Configuration is now done through CSS variables rather than JavaScript.
+2. **Import Syntax**: Single `@import` directive replaces multiple `@tailwind` directives.
+3. **Package Structure**: PostCSS plugin moved to `@tailwindcss/postcss`.
+4. **Zero-config Content Detection**: Template files are automatically discovered.
+5. **Color System**: OKLCH color space replaces RGB.
+
+## Code Patterns
+
+### Correct Import Syntax
+
+Always use the single-line import in CSS files:
+
+```css
+@import 'tailwindcss';
+```
+
+Never use the old v3 directives:
+
+```css
+/* DO NOT USE - OUTDATED V3 SYNTAX */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+### PostCSS Configuration
+
+Use the dedicated PostCSS package:
+
+```js
+// postcss.config.js or .mjs
+export default {
+  plugins: {
+    '@tailwindcss/postcss': {},
+    // autoprefixer no longer needed
+  },
+}
+```
+
+### Theme Configuration
+
+Define themes with CSS variables, not JavaScript:
+
+```css
+:root {
+  --color-primary: #3490dc;
+}
+
+/* For custom themes */
+@theme {
+  --color-neon-lime: oklch(85% 0.3 140);
+  --screen-3xl: 1600px;
+}
+```
+
+### Color Opacity
+
+Use slash syntax for opacity:
+
+```html
+<!-- CORRECT -->
+<div class="text-black/50">Text with opacity</div>
+
+<!-- INCORRECT - OLD V3 SYNTAX -->
+<div class="text-black text-opacity-50">Text with opacity</div>
+```
+
+### Renamed Utilities
+
+Remember these utility renames:
+- `line-clamp-*` → `text-clamp-*`
+- `decoration-*` → `underline-*`
+- `break-*` → `wrap-*`
+
+### Next.js Integration
+
+For Next.js projects:
+
+```css
+/* app/globals.css */
+@import 'tailwindcss';
+/* Additional styles... */
+```
+
+```js
+// postcss.config.mjs
+export default {
+  plugins: {
+    '@tailwindcss/postcss': {},
+  },
+}
+```
+
+## New Features To Use
+
+- **3D Transforms**: `rotate-x-*`, `scale-z-*`, etc.
+- **Container Queries**: `@container` and `@lg:*` syntax
+- **Dynamic Utilities**: Arbitrary values without brackets: `grid-cols-16`
+
+## Browser Compatibility
+
+Tailwind CSS v4 requires modern browsers:
+- Safari 16.4+
+- Chrome 111+
+- Firefox 128+
+
+It uses modern CSS features like `@property` and `color-mix()`.
