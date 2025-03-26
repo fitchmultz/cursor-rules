@@ -1,9 +1,7 @@
 ---
 description: Tailwind CSS v4 Standards and Best Practices
-globs: "*.{js,jsx,ts,tsx,css,html}"
-version: "1.0.0"
-date: "2025-03-25"
-author: "Claude 3.7 Sonnet"
+globs: *.js,*.jsx,*.ts,*.tsx,*.css,*.html
+alwaysApply: false
 ---
 
 # Tailwind CSS v4 Standards
