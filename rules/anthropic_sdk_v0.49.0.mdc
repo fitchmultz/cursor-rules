@@ -17,7 +17,7 @@ The Anthropic Python SDK v0.49.0 provides convenient access to the Anthropic RES
 3. **Pydantic Models**: Structured responses with helper methods
 4. **Token Counting**: Estimate token usage before making API calls
 5. **Streaming Support**: Efficient streaming of responses with helpers
-6. **Batch Processing**: Asynchronous processing of large message volumes
+6. **Batch Processing**: Asynchronous processing of large message volumes (50% discount)
 7. **Tool Use**: Support for function calling with Claude
 
 ## Installation and Setup
@@ -69,7 +69,7 @@ messages: List[MessageParam] = [create_user_message("Hello, Claude")]
 
 # Response is properly typed
 response: Message = client.messages.create(
-    model="claude-3-7-sonnet-20250219",
+    model="claude-3-7-sonnet-latest", # Updated model
     max_tokens=1024,
     messages=messages
 )
@@ -99,7 +99,7 @@ from anthropic.types import Message, TextBlock, ToolUseBlock
 client = Anthropic()
 
 response: Message = client.messages.create(
-    model="claude-3-7-sonnet-20250219",
+    model="claude-3-7-sonnet-latest", # Updated model
     max_tokens=1024,
     messages=[{"role": "user", "content": "Write a poem"}]
 )
@@ -130,7 +130,7 @@ messages: list[MessageParam] = [
 
 # Response is a typed Pydantic model
 message: Message = client.messages.create(
-    model="claude-3-7-sonnet-20250219",
+    model="claude-3-7-sonnet-latest", # Updated model
     max_tokens=1024,
     messages=messages
 )
@@ -175,7 +175,7 @@ async def main():
 
     # Async response is also properly typed
     message: Message = await client.messages.create(
-        model="claude-3-7-sonnet-20250219",
+        model="claude-3-7-sonnet-latest", # Updated model
         max_tokens=1024,
         messages=messages
     )
@@ -201,7 +201,7 @@ async def main():
         messages=[
             {"role": "user", "content": "Write a short poem about coding"}
         ],
-        model="claude-3-7-sonnet-20250219",
+        model="claude-3-7-sonnet-latest", # Updated model
     ) as stream:
         # Stream text as it's generated
         async for text in stream.text_stream:
@@ -229,7 +229,7 @@ async def main():
         messages=[
             {"role": "user", "content": "Write a short poem about coding"}
         ],
-        model="claude-3-7-sonnet-20250219",
+        model="claude-3-7-sonnet-latest", # Updated model
         stream=True,
     )
 
@@ -254,7 +254,7 @@ count = client.beta.messages.count_tokens(
     messages=[
         {"role": "user", "content": "Hello, Claude"}
     ],
-    model="claude-3-7-sonnet-20250219"
+    model="claude-3-7-sonnet-latest" # Updated model
 )
 
 print(f"Input tokens: {count.input_tokens}")
@@ -268,7 +268,7 @@ from anthropic import Anthropic
 client = Anthropic()
 
 message = client.messages.create(
-    model="claude-3-7-sonnet-20250219",
+    model="claude-3-7-sonnet-latest", # Updated model
     max_tokens=1024,
     messages=[
         {"role": "user", "content": "Write a brief summary of quantum computing"}
@@ -283,6 +283,7 @@ print(f"Output tokens: {message.usage.output_tokens}")
 ## Batch Processing
 
 The Message Batches API offers asynchronous processing of large volumes of Messages at a 50% discount.
+Pricing (as of late 2024): $5/million input tokens, $15/million output tokens. Batch discount applies.
 
 ### CORRECT - Creating and Processing a Batch
 
@@ -299,7 +300,7 @@ async def process_batch():
             {
                 "custom_id": "request-1",
                 "params": {
-                    "model": "claude-3-7-sonnet-20250219",
+                    "model": "claude-3-7-sonnet-latest", # Updated model
                     "max_tokens": 1024,
                     "messages": [{"role": "user", "content": "Explain quantum computing"}],
                 }
@@ -307,7 +308,7 @@ async def process_batch():
             {
                 "custom_id": "request-2",
                 "params": {
-                    "model": "claude-3-7-sonnet-20250219",
+                    "model": "claude-3-5-sonnet-latest", # Updated model
                     "max_tokens": 1024,
                     "messages": [{"role": "user", "content": "Explain machine learning"}],
                 }
@@ -390,7 +391,7 @@ def process_tool(tool_name: str, tool_input: Dict[str, Any]) -> Any:
 
 def talk_with_tools(user_message: str):
     response = client.messages.create(
-        model="claude-3-7-sonnet-20250219",
+        model="claude-3-7-sonnet-latest", # Updated model
         max_tokens=1024,
         tools=tools,
         messages=[
@@ -408,7 +409,7 @@ def talk_with_tools(user_message: str):
 
         # Send the result back to Claude
         final_response = client.messages.create(
-            model="claude-3-7-sonnet-20250219",
+            model="claude-3-7-sonnet-latest", # Updated model
             max_tokens=1024,
             tools=tools,
             messages=[
@@ -453,7 +454,7 @@ client = Anthropic()
 
 try:
     message = client.messages.create(
-        model="claude-3-7-sonnet-20250219",
+        model="claude-3-7-sonnet-latest", # Updated model
         max_tokens=1024,
         messages=[
             {"role": "user", "content": "Hello, Claude"}
@@ -481,7 +482,7 @@ from anthropic.types import Message, TextBlock, ContentBlock
 client = Anthropic()
 
 message: Message = client.messages.create(
-    model="claude-3-7-sonnet-20250219",
+    model="claude-3-7-sonnet-latest", # Updated model
     max_tokens=1024,
     messages=[
         {"role": "user", "content": "Make a list of planets"}
@@ -510,7 +511,7 @@ from anthropic import AnthropicVertex
 client = AnthropicVertex()
 
 message = client.messages.create(
-    model="claude-3-5-sonnet-v2@20241022",  # Vertex AI model name format
+    model="claude-3-5-sonnet@latest",  # Vertex AI model name format (check Vertex docs for exact name)
     max_tokens=1024,
     messages=[
         {"role": "user", "content": "Hello, Claude"}
@@ -532,7 +533,7 @@ from anthropic import AnthropicBedrock
 client = AnthropicBedrock()
 
 message = client.messages.create(
-    model="anthropic.claude-3-7-sonnet-20250219",  # Bedrock model name format
+    model="anthropic.claude-3-7-sonnet-latest",  # Bedrock model name format (check Bedrock docs for exact name)
     max_tokens=1024,
     messages=[
         {"role": "user", "content": "Hello, Claude"}
@@ -604,9 +605,9 @@ from anthropic.types import (
     ContentBlockStartEvent,
     ContentBlockStopEvent,
 
-    # Batch processing types
-    MessageBatch,
-    MessageBatchResult,
+    # Batch processing types (from beta)
+    # from anthropic.types.beta.messages import BetaMessageBatch as MessageBatch
+    # from anthropic.types.beta.messages import BetaMessageBatchResult as MessageBatchResult
 
     # Error types
     APIError,
